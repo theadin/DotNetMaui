@@ -4,7 +4,45 @@
   <br><br>
     I will use Shell for navigation to demonstrate it works, but this is not a pre-requiset to do deep linking
   <br><br>
-  Since we want to show that we can handle deeplinking, we will create a second page and when the user arrives from the link we will forward the user to the second page.<br>
-  So, Create a second page called SecondPage.xaml
+    Since we want to show that we can handle deeplinking, we will create a second page and when the user arrives from the link we will forward the user to the second page.<br>
+    So, Create a second page called SecondPage.xaml
   <br><br>
-  In AppShell.xaml 
+    In AppShell.xaml add for navigation:<br>
+      <ShellContent
+      Title="Second Page"
+      ContentTemplate="{DataTemplate local:SecondPage}"
+      Route="SecondPage" /><br>
+    [[add Screenshot 2023-02-01 161145.jpg]]
+  <br><br>    
+    Open MainActivity.cs<br>
+    [[add Screenshot Screenshot Screenshot 2023-02-01 161412.jpg]]<br>
+    add the IntentFilter:<br>
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },<br>
+                      DataScheme = "http",<br>
+                      DataHost = "yourdomain.com",<br>
+                      DataPathPrefix = "/bubu",<br>
+                      AutoVerify = true,<br>
+                      Categories = new[] { Android.Content.Intent.ActionView, Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]<br>
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },<br>
+                      DataScheme = "https",<br>
+                      DataHost = "yourdomain.com",<br>
+                      DataPathPrefix = "/bubu",<br>
+                      AutoVerify = true,<br>
+                      Categories = new[] { Android.Content.Intent.ActionView, Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]<br>
+    <br><br>
+    Also add the OnCreate function:
+    protected override void OnCreate(Bundle savedInstanceState)<br>
+    {<br>
+      Intent intent = this.Intent;<br>
+      var action = intent.Action;<br>
+      var strLink = intent.DataString;<br>
+      if (Intent.ActionView == action && !string.IsNullOrWhiteSpace(strLink))<br>
+      {<br>
+          //handle intent routing<br>
+          Shell.Current.GoToAsync($"//{nameof(SecondPage)}", true);<br>
+      }<br>
+      <br>
+    base.OnCreate(savedInstanceState);<br>
+    }<br>
+    Here is what mine looks like:<br>
+    [[ add screenshopt Screenshot 2023-02-01 155024.jpg]]
