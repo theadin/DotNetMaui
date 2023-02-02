@@ -36,8 +36,7 @@ Follow along with me.
     Open MainActivity.cs
 <br>
 <img src="Screenshot%202023-02-01%20161412.jpg" />
-          
-<br>
+<br><br>
     add the IntentFilter:
 <br>
 <pre>
@@ -59,6 +58,7 @@ Follow along with me.
 Note: IntentFilters defined in MainActivity.cs are infused into the AndroidManifest.xml when compiling.<br>
 If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and open AndroidManifest.xml file, you will see how they look in the XML:<br>
 <img src="AndroidManifest.xml.jpg">
+<br><br>
 <hr>
 <br>
     In the above you can see that I defined the <b>DataPathPrefix</b> to "bubu" so this means that if the link is URL + "bubu" (https://aronson.co.il/bubu) - tapping it will activate opening of app but otherwise the domain will open in the browser<br />
@@ -97,29 +97,27 @@ If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and
     Open the "App Info" page (you can do this by opening the App Switcher screen, tapping the icon above the app and then selecting "App Info"
 <br>
     <img src="Screenshot%202023-02-01%20154336.jpg" />
-<br>
+    <br><br>
     Scroll down to "Open by default" and tap it<br>
     <img src="Screenshot%202023-02-01%20154410.jpg" />
-<br>
-<br>
-<br>
+    <br><br>
     Tap on "Add Link"<br>
     <img src="Screenshot%202023-02-01%20154439.jpg" />
-<br>
+    <br><br>
     You should see the domain you defined in the IntentFilters, tap the checkbox and then tap "Add"<br>
     <img src="Screenshot%202023-02-01%20154503.jpg" />
-<br>
+    <br><br>
 <br>
 <br>
     Now, go to the webpage you created in the emulator's browser.
     here you can see I created two links, the top one should open the app and direct the user to second page.<br>
 <br>
     <img src="Screenshot%202023-02-01%20154552.jpg" />
-<br>
+    <br><br>
     Here you can see I put a breakpoint which handles the event and I know the URL that was clicked:
 <br>
     <img src="Screenshot%202023-02-01%20160735.jpg" />
-<br>
+    <br><br>
     The second link I have in the webpage (aronson.co.il/gaga) is to make sure that clicking on it does NOT open the app.
 
     <br>
@@ -129,9 +127,19 @@ If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and
     In order for the link to work after deploying to the Google Play store you will need to prove ownership of the domain (in my case - aronson.co.il)<br>
     You do this by creating a file called assetlinks.json and putting it in the /.well-known/ (so in my case - aronson.co.il/.well-known/assetlinks.json)
     <br>
-The easiest way to do this is to upload your app to the Google Play console and go to your app and the on left side panel scroll down to "Deep Links" in the "Grow" section<br>
+The easiest way to do this is to upload your app to the Google Play console, go to your app and the on left side panel scroll down to "Deep Links" in the "Grow" section<br>
 <img src="gpconsole1.jpg">
-
+<br><br>
+Here you can see the domain and weblink you defined in the IntentFilters.<br>
+Click on the arrow to the right of domain:<br>
+<img src="gpconsole2.jpg">
+<br><br>
+Click on "Show More v":<br>
+<img src="gpconsole3.jpg">
+<br><br>
+And here you have the content of the file you need and the location it needs to be on your site!<br>
+<img src="gpconsole4.jpg">
+<br><br>
 
 
 
