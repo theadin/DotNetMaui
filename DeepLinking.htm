@@ -6,7 +6,7 @@
 Sources I used to learn this:<br>
 <a href="https://learn.microsoft.com/en-us/xamarin/android/platform/app-linking">App-Linking in Android</a><br>
 <a href="https://developer.android.com/training/app-links">Handling Android App Links</a>
-<br>
+<br><br><br>
 Follow along with me.
 <br />
 <br />
@@ -30,12 +30,12 @@ Follow along with me.
     Route=&quot;SecondPage&quot; /&gt;
 </pre>
 <br>
-<img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20161145.jpg" />
+<img src="Screenshot%202023-02-01%20161145.jpg" />
 <br>
 <br>
     Open MainActivity.cs
 <br>
-<img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20161412.jpg" />
+<img src="Screenshot%202023-02-01%20161412.jpg" />
           
 <br>
     add the IntentFilter:
@@ -58,39 +58,29 @@ Follow along with me.
 <hr>
 Note: IntentFilters defined in MainActivity.cs are infused into the AndroidManifest.xml when compiling.<br>
 If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and open AndroidManifest.xml file, you will see how they look in the XML:<br>
-<img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/SecondPage.xaml.jpg">
+<img src="AndroidManifest.xml.jpg">
 <hr>
 <br>
     In the above you can see that I defined the <b>DataPathPrefix</b> to "bubu" so this means that if the link is URL + "bubu" (https://aronson.co.il/bubu) - tapping it will activate opening of app but otherwise the domain will open in the browser<br />
-    Also add the OnCreate function:<br />
+    <br><Br>
+    To handle the event of your app being opened from a link you need to add the OnCreate function:<br />
     protected override void OnCreate(Bundle savedInstanceState)
-<br>
+<pre>
     {
-<br>
       Intent intent = this.Intent;
-<br>
       var action = intent.Action;
-<br>
       var strLink = intent.DataString;
-<br>
       if (Intent.ActionView == action && !string.IsNullOrWhiteSpace(strLink))
-<br>
       {
-<br>
           //handle intent routing
-<br>
           Shell.Current.GoToAsync($"//{nameof(SecondPage)}", true);
-<br>
       }
-<br>
-<br>
     base.OnCreate(savedInstanceState);
-<br>
     }
+  </pre>
+    Here is what my MainActivity.cs looks like after ading the IntentFilters and the OnCreate function:
 <br>
-    Here is what mine looks like:
-<br>
-    <img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20155024.jpg" />
+    <img src="Screenshot%202023-02-01%20155024.jpg" />
 <br>
 <br>
     For this to work after deploying to Google Play (without having to manually set like I will show below) you will need to add a special file to your site, I will explain about this below. But for now, let us test this in the Android Emulator. (I believe you need to have Google Play Store in the Android Emulator to see the "Open by Default" option I will describe below
@@ -104,15 +94,15 @@ If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and
 <br>
 <br>
     Open the "App Info" page (you can do this by opening the App Switcher screen, tapping the icon above the app and then selecting "App Info"
-<img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20154336.jpg" />
+<img src="Screenshot%202023-02-01%20154336.jpg" />
 <br>
     Scroll down to "Openb by default" and tap it
-    <img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20154410.jpg" />
+    <img src="Screenshot%202023-02-01%20154410.jpg" />
 <br>
 <br>
 <br>
     Tap on "Add Link"
-    <img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20154439.jpg" />
+    <img src="Screenshot%202023-02-01%20154439.jpg" />
 <br>
     You should see the domain you defined in the IntentFilters, tap the checkbox and then tap "Add"
 <br>
@@ -120,14 +110,19 @@ If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and
 <br>
     Now, go to the webpage you created in the emulator's browser
 <br>
-    <img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20154552.jpg" />
+    <img src="Screenshot%202023-02-01%20154552.jpg" />
 <br>
     here you can see I created two links, the top one should open the app and direct the user to second page.
 <br>
     Here you can see I put a breakpoint which handles the event and I know the URL that was clicked:
 <br>
     [[ add Screenshot 2023-02-01 160735.jpg]]
-    <img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20160735.jpg" />
+    <img src="Screenshot%202023-02-01%20160735.jpg" />
 <br>
     The second link I have in the webpage (aronson.co.il/gaga) is to make sure that clicking on it does NOT open the app.
+
+    <br>
+    <br><br>
+    <h3>The Digital Assets Link File - assetlinks.json</h3>
+
 
