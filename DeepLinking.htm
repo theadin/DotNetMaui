@@ -1,73 +1,124 @@
-  <b>The Super Simple tutorial on Deep Linking for .Net Maui Developers<b>
-    Where I explain how to have a link to your website, open the app and handle it<br>
-  <br><br>
+<b>The Super Simple tutorial on Deep Linking for .Net Maui Developers</b>
+<br />
+    Where I explain how to have a link to your website, open the app and handle it
+<br>
+<br>
+<br>
+Follow along with me.
+<br />
+<br />
   Create a new .Maui App.
-  <br><br>
-    I will use Shell for navigation to demonstrate it works, but this is not a pre-requiset to do deep linking
-  <br><br>
-    Since we want to show that we can handle deeplinking, we will create a second page and when the user arrives from the link we will forward the user to the second page.<br>
-    So, Create a second page called SecondPage.xaml. I'm using the domain "aronson.co.il", replace this with your domain.
-  <br><br>
-    In AppShell.xaml add for navigation:<br>
-      <ShellContent
-      Title="Second Page"
-      ContentTemplate="{DataTemplate local:SecondPage}"
-      Route="SecondPage" /><br>
-    [[add Screenshot 2023-02-01 161145.jpg]]
-  <br><br>    
-    Open MainActivity.cs<br>
-    [[add Screenshot Screenshot Screenshot 2023-02-01 161412.jpg]]<br>
-    add the IntentFilter:<br>
-    [IntentFilter(new[] { Android.Content.Intent.ActionView },<br>
-                      DataScheme = "http",<br>
-                      DataHost = "aronson.co.il",<br>
-                      DataPathPrefix = "/bubu",<br>
-                      AutoVerify = true,<br>
-                      Categories = new[] { Android.Content.Intent.ActionView, Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]<br>
-    [IntentFilter(new[] { Android.Content.Intent.ActionView },<br>
-                      DataScheme = "https",<br>
-                      DataHost = "aronson.co.il",<br>
-                      DataPathPrefix = "/bubu",<br>
-                      AutoVerify = true,<br>
-                      Categories = new[] { Android.Content.Intent.ActionView, Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]<br>
-    <br><br>
-    In the above you can see that I defined the DataPathPrefix to "bubu" so this means that if the URL + "bubu" - https://aronson.co.il/bubu - will activate opening of app but otherwise the domain will open in the browser
-    Also add the OnCreate function:
-    protected override void OnCreate(Bundle savedInstanceState)<br>
-    {<br>
-      Intent intent = this.Intent;<br>
-      var action = intent.Action;<br>
-      var strLink = intent.DataString;<br>
-      if (Intent.ActionView == action && !string.IsNullOrWhiteSpace(strLink))<br>
-      {<br>
-          //handle intent routing<br>
-          Shell.Current.GoToAsync($"//{nameof(SecondPage)}", true);<br>
-      }<br>
-      <br>
-    base.OnCreate(savedInstanceState);<br>
-    }<br>
-    Here is what mine looks like:<br>
+<br>
+<br>
+    I will use Shell for navigation to demonstrate how it works, but this is not a prerequisite to do deep linking.
+<br>
+<br>
+    Since we want to show that we can handle deep linking, we will create a second page and when the user arrives from the link we will forward the user to the second page in the app.
+<br>
+    So, Create a second page called <b>SecondPage.xaml</b>. I'm using the domain "aronson.co.il", replace this with your domain.
+<br>
+<br>
+    In <b>AppShell.xaml</b> add the following so we can later navigate to the second page:
+<br>
+<pre>
+&lt;ShellContent 
+    Title=&quot;Second Page&quot; 
+    ContentTemplate=&quot;{DataTemplate local:SecondPage}&quot; 
+    Route=&quot;SecondPage&quot; /&gt;
+</pre>
+<br>
+<img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20161145.jpg" />
+<br>
+<br>
+    Open MainActivity.cs
+<br>
+<img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/Screenshot%202023-02-01%20161412.jpg" />
+          
+<br>
+    add the IntentFilter:
+<br>
+<pre>
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+                      DataScheme = "http",
+                      DataHost = "aronson.co.il",
+                      DataPathPrefix = "/bubu",
+                      AutoVerify = true,
+                      Categories = new[] { Android.Content.Intent.ActionView, Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+                      DataScheme = "https",
+                      DataHost = "aronson.co.il",
+                      DataPathPrefix = "/bubu",
+                      AutoVerify = true,
+                      Categories = new[] { Android.Content.Intent.ActionView, Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
+</pre>
+<br>
+<br>
+    In the above you can see that I defined the <b>DataPathPrefix</b> to "bubu" so this means that if the link is URL + "bubu" (https://aronson.co.il/bubu) - tapping it will activate opening of app but otherwise the domain will open in the browser<br />
+    Also add the OnCreate function:<br />
+    protected override void OnCreate(Bundle savedInstanceState)
+<br>
+    {
+<br>
+      Intent intent = this.Intent;
+<br>
+      var action = intent.Action;
+<br>
+      var strLink = intent.DataString;
+<br>
+      if (Intent.ActionView == action && !string.IsNullOrWhiteSpace(strLink))
+<br>
+      {
+<br>
+          //handle intent routing
+<br>
+          Shell.Current.GoToAsync($"//{nameof(SecondPage)}", true);
+<br>
+      }
+<br>
+<br>
+    base.OnCreate(savedInstanceState);
+<br>
+    }
+<br>
+    Here is what mine looks like:
+<br>
     [[ add screenshopt Screenshot 2023-02-01 155024.jpg]]
-<br><br>
-    For this to work after deploying to Google Play (without having to manually set like I will show below) you will need to add a special file to your site, I will explain about this below. But for now, let us test this in the Android Emulator. (I believe you need to have Google Play Store in the Android Emulator to see the "Open by Default" option I will describe below<br>
-<br><br>
+<br>
+<br>
+    For this to work after deploying to Google Play (without having to manually set like I will show below) you will need to add a special file to your site, I will explain about this below. But for now, let us test this in the Android Emulator. (I believe you need to have Google Play Store in the Android Emulator to see the "Open by Default" option I will describe below
+<br>
+<br>
+<br>
     Create a webpage with an href link to aronson.co.il/bubu which you can access from the browser in the Android Emulator
-<br><br>
+<br>
+<br>
     Run the app in the Emulator
-    <br><br>
+<br>
+<br>
     Open the "App Info" page (you can do this by opening the App Switcher screen, tapping the icon above the app and then selecting "App Info"
-[[ add Screenshot 2023-02-01 154336.jpg]]<br>
+[[ add Screenshot 2023-02-01 154336.jpg]]
+<br>
     Scroll down to "Openb by default" and tap it
-    [[ add Screenshot 2023-02-01 154410.jpg]]<br>
-    <br><br>
+    [[ add Screenshot 2023-02-01 154410.jpg]]
+<br>
+<br>
+<br>
     Tap on "Add Link"
-    [[ add Screenshot 2023-02-01 154439.jpg]]<br>
-    You should see the domain you defined in the IntentFilters, tap the checkbox and then tap "Add"<br>
-    <br><br>
-    Now, go to the webpage you created in the emulator's browser<br>
-    [[ add Screenshot 2023-02-01 154552.jpg]]<br>
-    here you can see I created two links, the top one should open the app and direct the user to second page.<br>
-    Here you can see I put a breakpoint which handles the event and I know the URL that was clicked:<br>
-    [[ add Screenshot 2023-02-01 160735.jpg]]<br>
-    The second link I have in the webpage (aronson.co.il/gaga) is to make sure that clicking on it does NOT open the app. 
-    
+    [[ add Screenshot 2023-02-01 154439.jpg]]
+<br>
+    You should see the domain you defined in the IntentFilters, tap the checkbox and then tap "Add"
+<br>
+<br>
+<br>
+    Now, go to the webpage you created in the emulator's browser
+<br>
+    [[ add Screenshot 2023-02-01 154552.jpg]]
+<br>
+    here you can see I created two links, the top one should open the app and direct the user to second page.
+<br>
+    Here you can see I put a breakpoint which handles the event and I know the URL that was clicked:
+<br>
+    [[ add Screenshot 2023-02-01 160735.jpg]]
+<br>
+    The second link I have in the webpage (aronson.co.il/gaga) is to make sure that clicking on it does NOT open the app.
+
