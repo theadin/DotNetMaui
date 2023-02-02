@@ -1,8 +1,11 @@
-<b>The Super Simple tutorial on Deep Linking for .Net Maui Developers</b>
+<b>The Super Simple tutorial on Deep Linking (Web links) for .Net Maui in Android Developers</b>
 <br />
     Where I explain how to have a link to your website, open the app and handle it
 <br>
 <br>
+Sources I used to learn this:<br>
+<a href="https://learn.microsoft.com/en-us/xamarin/android/platform/app-linking">App-Linking in Android</a><br>
+<a href="https://developer.android.com/training/app-links">Handling Android App Links</a>
 <br>
 Follow along with me.
 <br />
@@ -52,6 +55,11 @@ Follow along with me.
                       Categories = new[] { Android.Content.Intent.ActionView, Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
 </pre>
 <br>
+<hr>
+Note: IntentFilters defined in MainActivity.cs are infused into the AndroidManifest.xml when compiling.<br>
+If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and open AndroidManifest.xml file, you will see how they look in the XML:<br>
+<img src="https://raw.githubusercontent.com/theadin/DotNetMaui/main/SecondPage.xaml.jpg">
+<hr>
 <br>
     In the above you can see that I defined the <b>DataPathPrefix</b> to "bubu" so this means that if the link is URL + "bubu" (https://aronson.co.il/bubu) - tapping it will activate opening of app but otherwise the domain will open in the browser<br />
     Also add the OnCreate function:<br />
