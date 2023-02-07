@@ -17,10 +17,10 @@
 <body>
 
 
-    <h1 class="p-5">The Super Simple tutorial on Deep Linking (Web links) for .Net Maui in Android Developers</h1>
+    <h1 class="p-5">Deep Linking (Web links) in Android for .Net Maui</h1>
 
     <div class="row p-3 m-3">
-        Where I explain how to have a link to your website, open the app and handle it
+        Where I explain how to have a link to your website, open your app and handle it
         <br>
         <br>
         Sources I used to learn this:
@@ -44,15 +44,62 @@
             linking.
             <br>
             <br>
-            Since we want to show that we can handle deep linking, we will create a second page and when the user
-            arrives from the link we will forward the user to the second page in the app.
+            I’m using the domain “aronson.co.il”, replace this with your domain.
             <br>
-            So, Create a second page called <b>SecondPage.xaml</b>. I'm using the domain "aronson.co.il", replace this
-            with your domain.
+            <br>
+            Since we want to show that we can handle deep linking, we will create a second page in our app and when the user arrives from the link we will forward the user to the second page in the app.
+            <br>
+            So, Create a second page called <i>SecondPage.xaml</i>.
             <br>
             <br>
         </div>
         <div class="col-md-6 themed-grid-col"></div>
+    </div>
+
+    <div class="row mb-3 adin_gray_box p-3 m-3">
+        <div class="col-md-6 themed-grid-col">
+            <p>I added the following label in the XAML:</p>
+
+            <pre>
+&lt;Label x:Name=&quot;MyLabel&quot; HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot; /&gt;
+            </pre>
+
+        </div>
+        <div class="col-md-6 themed-grid-col">
+            
+        </div>
+    </div>
+    
+    
+    <div class="row mb-3 adin_gray_box p-3 m-3">
+        <div class="col-md-6 themed-grid-col">
+            <p>And my code behind looks like this:</p>
+
+            <pre>
+namespace MauiApp1;
+
+[QueryProperty(nameof(IdFromURL), "IdFromURL")]
+public partial class SecondPage : ContentPage
+{
+    public string IdFromURL
+    {
+        set
+        {
+            MyLabel.Text = value;
+        }
+    }
+
+    public SecondPage()
+    {
+        InitializeComponent();
+    }
+}
+            </pre>
+
+        </div>
+        <div class="col-md-6 themed-grid-col">
+            
+        </div>
     </div>
 
     <div class="row mb-3 adin_gray_box p-3 m-3">
