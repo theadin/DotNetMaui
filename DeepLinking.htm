@@ -47,7 +47,8 @@
             I’m using the domain “aronson.co.il”, replace this with your domain.
             <br>
             <br>
-            Since we want to show that we can handle deep linking, we will create a second page in our app and when the user arrives from the link we will forward the user to the second page in the app.
+            Since we want to show that we can handle deep linking, we will create a second page in our app and when the
+            user arrives from the link we will forward the user to the second page in the app.
             <br>
             So, Create a second page called <i>SecondPage.xaml</i>.
             <br>
@@ -66,11 +67,11 @@
 
         </div>
         <div class="col-md-6 themed-grid-col">
-            
+
         </div>
     </div>
-    
-    
+
+
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
             <p>And my code behind looks like this:</p>
@@ -98,13 +99,13 @@ public partial class SecondPage : ContentPage
 
         </div>
         <div class="col-md-6 themed-grid-col">
-            
+
         </div>
     </div>
 
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
-            <p>In <b>AppShell.xaml</b> add the following so we can later navigate to the second page:</p>
+            <p>In <i>AppShell.xaml</i> add the following so we can later navigate to the second page:</p>
 
             <pre>
                     &lt;ShellContent 
@@ -147,7 +148,7 @@ public partial class SecondPage : ContentPage
 
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
-            Here is how MainActivity.cs looks with the IntentFilters
+            Here is how <i>MainActivity.cs</i> looks with the IntentFilters
             <br /><br />
             You can see that I defined the <b>DataPathPrefix</b> to "bubu" so this means that if the link is URL +
             "bubu" (https://aronson.co.il/bubu) - tapping it will activate opening of app but otherwise the domain will
@@ -164,7 +165,8 @@ public partial class SecondPage : ContentPage
         <div class="col-md-6 themed-grid-col">
             TIP: IntentFilters defined in MainActivity.cs are infused into the AndroidManifest.xml when compiling.
             <br /><br />
-            If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and open AndroidManifest.xml
+            If you want to see the XML created, go to "\obj\Debug\net7.0-android" folder and open
+            <i>AndroidManifest.xml</i>
             file, you will see how they look in the image to the right.
         </div>
         <div class="col-md-6 themed-grid-col">
@@ -174,7 +176,8 @@ public partial class SecondPage : ContentPage
 
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-12 themed-grid-col">
-            To handle the event of your app being opened from a link you need to add the OnCreate function:<br />
+            To handle the event of your app being opened from a link you need to add the OnCreate function in the
+            <i>MainActivity.cs</i> file::<br />
             <br /><br />
             <pre>
 protected override void OnCreate(Bundle savedInstanceState)
@@ -185,9 +188,9 @@ protected override void OnCreate(Bundle savedInstanceState)
     if (Intent.ActionView == action && !string.IsNullOrWhiteSpace(strLink))
     {
         //handle intent routing
-        Shell.Current.GoToAsync($"//{nameof(SecondPage)}", true);
+        Shell.Current.GoToAsync($"//{nameof(SecondPage)}?IdFromURL={id}", true);
     }
-base.OnCreate(savedInstanceState);
+    base.OnCreate(savedInstanceState);
 }
 </pre>
             This code was found at <a href="https://stackoverflow.com/a/74888250/5754">here</a>
@@ -197,7 +200,7 @@ base.OnCreate(savedInstanceState);
 
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
-            Here is what my MainActivity.cs looks like after adding the IntentFilters and the OnCreate function:
+            Here is what my <i>MainActivity.cs</i> looks like after adding the IntentFilters and the OnCreate function:
             <br />
             (click to enlarge)
         </div>
@@ -211,9 +214,9 @@ base.OnCreate(savedInstanceState);
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
             For this to work after deploying to Google Play (without having to manually set like I will show below) you
-            will need to add a special file to your site, I will explain about this below. But for now, let us test this
+            will need to add a special file to your site, I will explain about this later, but for now, let us test this
             in the Android Emulator. (I believe you need to have Google Play Store in the Android Emulator to see the
-            "Open by Default" option I will describe below
+            “Open by Default” option I will describe below.
         </div>
         <div class="col-md-6 themed-grid-col">
 
@@ -222,8 +225,8 @@ base.OnCreate(savedInstanceState);
 
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
-            Create a web page with an href link to aronson.co.il/bubu which you can access from the browser in the
-            Android Emulator
+            Create a web page with an HREF link to aronson.co.il/bubu (swap your own domain in) which you can access
+            from the browser in the Android Emulator
         </div>
         <div class="col-md-6 themed-grid-col">
 
@@ -240,8 +243,8 @@ base.OnCreate(savedInstanceState);
     </div>
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
-            Open the "App Info" page (you can do this by opening the App Switcher screen, tapping the icon above the app
-            and then selecting "App Info"
+            Open the “App Info” page (you can do this by opening the App Switcher screen, tapping the icon above the app
+            and then selecting “App Info”
         </div>
         <div class="col-md-6 themed-grid-col">
             <img src="Screenshot%202023-02-01%20154336.jpg" />
@@ -267,7 +270,7 @@ base.OnCreate(savedInstanceState);
 
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
-            You should see the domain you defined in the IntentFilters, tap the checkbox and then tap "Add"
+            You should see the domain you defined in the IntentFilters, tap the checkbox if it isn’t ticked and then tap “Add”
         </div>
         <div class="col-md-6 themed-grid-col">
             <img src="Screenshot%202023-02-01%20154503.jpg" />
@@ -289,10 +292,18 @@ base.OnCreate(savedInstanceState);
     <div class="row mb-3 adin_gray_box p-3 m-3">
         <div class="col-md-6 themed-grid-col">
             Here you can see I put a breakpoint which handles the event and I know the URL that was clicked:
-
         </div>
         <div class="col-md-6 themed-grid-col">
             <img src="Screenshot%202023-02-01%20160735.jpg" />
+        </div>
+    </div>
+
+    <div class="row mb-3 adin_gray_box p-3 m-3">
+        <div class="col-md-6 themed-grid-col">
+            Once I let the code continue to run, I see The number 1 appears as it was the number I extracted from the Web link:
+        </div>
+        <div class="col-md-6 themed-grid-col">
+            <img src="secondPageClicked.jpg" />
         </div>
     </div>
 
